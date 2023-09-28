@@ -1,0 +1,25 @@
+bases:
+- ../environments.yaml
+
+---
+
+helmDefaults:
+  kubeContext: {{ .Values.kubeContext }}
+
+releases:
+  - name: kratos
+    chart: ory/kratos
+    values:
+      - {{ .Values.kratos | toYaml | indent 8 | trim }}
+  - name: kratos-ui
+    chart: ory/kratos-selfservice-ui-node
+    values:
+      - {{ .Values.kratos_ui | toYaml | indent 8 | trim }}
+  - name: hydra
+    chart: ory/hydra
+    values:
+      - {{ .Values.hydra | toYaml | indent 8 | trim }}
+  - name: hydra-ui 
+    chart: ory/example-idp
+    values:
+      - {{ .Values.hydra_ui | toYaml | indent 8 | trim }}
